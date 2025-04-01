@@ -158,12 +158,12 @@ nile_red_rfus2 <- nile_red_rfus %>%
                                 
                                 grepl("time 6", file_name) ~ "time 6h",
                                 grepl("time 18h lipids", file_name) ~ "time 18h",
-                                grepl("time 1", file_name) ~ "time 1h",
+                                grepl("time 1 lipids", file_name) ~ "time 1h",
                                 grepl("time 24", file_name) ~ "time 24h",
                                 TRUE ~ NA)) %>% 
   rename(rfu_nile = RFU) %>% 
   # select(well, rfu_nile, time_point) %>% 
-  filter(time_point != "time 1h") %>% 
+  # filter(time_point != "time 1h") %>% 
   select(well, rfu_nile, time_point, treatment)
 
 
@@ -174,7 +174,7 @@ growth_rfus2 <- growth_rfus %>%
                                 
                                 grepl("time 6", file_name) ~ "time 6h",
                                 grepl("time 18h growth", file_name) ~ "time 18h",
-                                grepl("time 1", file_name) ~ "time 1h",
+                                grepl("time 1 growth", file_name) ~ "time 1h",
                                 grepl("time 24", file_name) ~ "time 24h",
                                 TRUE ~ NA)) %>% 
   rename(rfu_growth = RFU) %>%
@@ -209,7 +209,7 @@ all_data2 %>%
 all_data3 <- all_data2 %>% 
   filter(treatment != "combo") %>% 
   filter(treatment == "no-dilution-25" | treatment == "no-dilution-36") %>% 
-  mutate(time_point = fct_relevel(time_point,c("time 0h","time 3h","time 6h", "time 18h", "time 24h")))
+  mutate(time_point = fct_relevel(time_point,c("time 0h","time 1h", "time 3h","time 6h", "time 18h", "time 24h")))
 
 
 write_csv(all_data3, "data-processed/all_data3.csv")
