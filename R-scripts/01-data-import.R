@@ -212,6 +212,9 @@ all_data3 <- all_data2 %>%
   mutate(time_point = fct_relevel(time_point,c("time 0h","time 3h","time 6h", "time 18h", "time 24h")))
 
 
+write_csv(all_data3, "data-processed/all_data3.csv")
+
+
 all_data3 %>% 
   filter(treatment != "combo") %>% 
   filter(treatment == "no-dilution-25" | treatment == "no-dilution-36") %>% 
@@ -219,6 +222,6 @@ all_data3 %>%
   summarise(mean_rfu = mean(nile_per_cell),
             se_rfu = std.error(nile_per_cell)) %>% 
   ggplot(aes(x = time_point, y = mean_rfu, color = treatment)) + geom_point(size = 3) +
-  geom_errorbar(aes(x = time_point, ymin = mean_rfu - se_rfu, ymax = mean_rfu + se_rfu, width = 0.3)) + ylab("Relative fluorescence units (RFU)") + xlab("Time point")
+  geom_errorbar(aes(x = time_point, ymin = mean_rfu - se_rfu, ymax = mean_rfu + se_rfu, width = 0.3)) + ylab("Relative fluorescence units (RFU) per cell") + xlab("Time point")
 ggsave("figures/rfu-lipids-time.png", width = 8, height = 6)
 
